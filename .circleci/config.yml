@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: circleci/buildpack-deps:stretch
     environment:
-      IMAGE_NAME: bambash/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}
+      IMAGE_NAME: bambash/circle_ci
     steps:
       - checkout
       - setup_remote_docker:
@@ -12,13 +12,13 @@ jobs:
       - run:
           name: Build application Docker image
           command: |
-            docker build -t $IMAGE_NAME .
+            docker build -t $IMAGE_NAME:${CIRCLE_SHA1} .
       - run:
           name: Run tests
           command: |
-            docker run --rm -ti $IMAGE_NAME python tests/test.py
+            docker run --rm -ti $IMAGE_NAME:${CIRCLE_SHA1} python tests/test.py
       - run:
           name: Push image
           command: |
             docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD
-            docker push $IMAGE_NAME
+            docker push $IMAGE_NAME:${CIRCLE_SHA1}
