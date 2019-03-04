@@ -5,4 +5,4 @@ jobs:
       - image: circleci/python:3
     steps:
       - checkout
-      - run: python tests/tests.py
+      - run: python tests/test.py
