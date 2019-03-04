@@ -19,5 +19,5 @@ jobs:
           name: Push image
           context: DOCKER_HUB
           command: |
-            docker login -u${DOCKER_HUB_USER} -p ${DOCKER_HUB_PASSWORD}
+            docker login -u ${DOCKER_HUB_USER} -p ${DOCKER_HUB_PASSWORD}
             docker push ${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}
