@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: docker:latest
+      - image: circleci/buildpack-deps:stretch
     steps:
       - checkout
       - setup_remote_docker:
@@ -19,5 +19,5 @@ jobs:
           name: Push image
           context: DOCKER_HUB
           command: |
-            docker login -u ${DOCKER_HUB_USER} -p ${DOCKER_HUB_PASSWORD}
+            echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USER" --password-stdin
             docker push ${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}
